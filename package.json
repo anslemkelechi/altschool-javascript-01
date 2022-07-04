@@ -1,0 +1,14 @@
+{
+  "name": "assignment-02-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/exam-01-practice/assignment-02-template",
+  "author": "Charles Opute Odili <chaluwa@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --colors"
+  },
+  "dependencies": {
+    "jest": "^28.1.2"
+  }
+}

@@ -1,0 +1,64 @@
+name: Gradr
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:    
+  autograde:
+    name: Auto-Grade Code Changes
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - name: Checkout Your Code
+      uses: actions/checkout@v2
+
+    - name: Prepare Environment
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Acquire Audits
+      uses: actions/checkout@v2
+      with: 
+        repository: exam-01-practice/assignment-02-gradr-audits-js
+        path: audits
+
+    - name: Install Dependencies
+      run: |
+        npm install --location=global yarn
+        cd audits
+        yarn install
+
+    - name: Review Challenge - 1
+      run: |
+        cd audits
+        yarn audit-ch-1
+
+    - name: Review Challenge - 2
+      if: always()
+      run: |
+        cd audits
+        yarn audit-ch-2
+
+    - name: Review Challenge - 3
+      if: always()
+      run: |
+        cd audits
+        yarn audit-ch-3
+
+    - name: Report Audits
+      if: always()
+      uses: exam-01-practice/jest-to-sheets@v2
+      with:
+        challenge: 'ch-1;ch-2;ch-3'
+        lang: javascript
+        server: https://api.sheetson.com/v2/sheets
+        sheetid: 1Qb5Ovjy1l2UG94Cht2govguYX5fpCIgoTKPUd2ufMm4
+        token: HXlur8K20ZpoB-6FNsnSUtj2kGoDqCDHDl8vZBdLtQCv9UFOVhMsM2IBwD8
+        

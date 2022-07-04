@@ -1,0 +1,3 @@
+language = "nodejs"
+run = "node src/app.js"
+entrypoint = "src/assignment.js"
